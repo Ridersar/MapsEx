@@ -1,0 +1,2 @@
+rootProject.name='MapsEx'
+include ':app'
