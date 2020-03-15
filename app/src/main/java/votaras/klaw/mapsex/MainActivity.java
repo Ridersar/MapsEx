@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
         polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
 
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
-        polyline.setStrokeColor(Color.RED);
+        polyline.setStrokeColor(Color.BLUE);
         //polyline.setZIndex(100.0f);
     }
 }
