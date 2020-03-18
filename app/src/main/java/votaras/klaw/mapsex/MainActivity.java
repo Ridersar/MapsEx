@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     private final Point point4 = new Point(51.520771, 46.002646);
     private final Point point5 = new Point(51.541771, 46.032646);
     private final Point point6 = new Point(51.531771, 46.030646);
+    private final Point point7 = new Point(51.531771, 46.032646);
 
     private MapView mapView;
     private MapObjectCollection mapObjects;
@@ -90,6 +91,7 @@ public class MainActivity extends Activity {
         polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point5.getLatitude(), point5.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point6.getLatitude(), point6.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point7.getLatitude(), point7.getLongitude())); //добавление точки в список
 
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         polyline.setStrokeColor(Color.RED);
