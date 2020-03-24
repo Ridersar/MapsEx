@@ -94,11 +94,11 @@ public class MainActivity extends Activity {
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         polyline.setStrokeColor(Color.RED);
         //polyline.setZIndex(100.0f);
-        ArrayList<Point> polylinePointsGreen = new ArrayList<>();
-        polylinePointsGreen.add(new Point(BlackRoute1.getLatitude(), BlackRoute1.getLongitude())); //добавление точки в список
-        polylinePointsGreen.add(new Point(BlackRoute2.getLatitude(), BlackRoute2.getLongitude())); //добавление точки в список
-        polylinePointsGreen.add(new Point(BlackRoute3.getLatitude(), BlackRoute3.getLongitude())); //добавление точки в список
-        PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
-        polylineGreen.setStrokeColor(Color.BLACK);
+        ArrayList<Point> polylinePointsBlack = new ArrayList<>();
+        polylinePointsBlack.add(new Point(BlackRoute1.getLatitude(), BlackRoute1.getLongitude())); //добавление точки в список
+        polylinePointsBlack.add(new Point(BlackRoute2.getLatitude(), BlackRoute2.getLongitude())); //добавление точки в список
+        polylinePointsBlack.add(new Point(BlackRoute3.getLatitude(), BlackRoute3.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineBlack = mapObjects.addPolyline(new Polyline(polylinePointsBlack)); //отрисовка маршрута по точкам списка
+        polylineBlack.setStrokeColor(Color.BLACK);
     }
 }
