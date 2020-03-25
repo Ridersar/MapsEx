@@ -97,6 +97,7 @@ public class MainActivity extends Activity {
         polylinePoints.add(new Point(point2.getLatitude(), point2.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point3.getLatitude(), point3.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
+        //Влад Молодец
 
 
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
