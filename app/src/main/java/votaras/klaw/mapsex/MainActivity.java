@@ -28,12 +28,18 @@ public class MainActivity extends Activity {
     private final Point point3 = new Point(51.525753, 46.010434);
     private final Point point4 = new Point(51.520771, 46.002646);
 
+<<<<<<< HEAD
 
     private final Point MagentaRoute1 = new Point(51.528021,46.021923);
     private final Point MagentaRoute2 = new Point(51.522136,46.018522);
     private final Point GreenRoute1 = new Point(51.525276, 45.994920);
     private final Point GreenRoute2 = new Point(51.528515, 46.000392);
 
+=======
+>>>>>>> parent of 6b2d917... Поменял координаты и цвет маршрута
+    private final Point BlackRoute1 = new Point(51.533707,46.014950);
+    private final Point BlackRoute2 = new Point(51.530964,46.013334);
+    private final Point BlackRoute3 = new Point(51.529616,46.019258);
 
     private MapView mapView;
     private MapObjectCollection mapObjects;
@@ -95,10 +101,11 @@ public class MainActivity extends Activity {
         polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
         //Влад Молодец
 
+
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         polyline.setStrokeColor(Color.RED);
         //polyline.setZIndex(100.0f);
-
+<<<<<<< HEAD
 
         ArrayList<Point> polylinePointsMagenta = new ArrayList<>();
         polylinePointsMagenta.add(new Point(MagentaRoute1.getLatitude(), MagentaRoute1.getLongitude())); //добавление точки в список
@@ -112,6 +119,16 @@ public class MainActivity extends Activity {
         PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
         polylineGreen.setStrokeColor(Color.GREEN);
 
-
+=======
+>>>>>>> parent of 6b2d917... Поменял координаты и цвет маршрута
+        ArrayList<Point> polylinePointsBlack = new ArrayList<>();
+        polylinePointsBlack.add(new Point(BlackRoute1.getLatitude(), BlackRoute1.getLongitude())); //добавление точки в список
+        polylinePointsBlack.add(new Point(BlackRoute2.getLatitude(), BlackRoute2.getLongitude())); //добавление точки в список
+        polylinePointsBlack.add(new Point(BlackRoute3.getLatitude(), BlackRoute3.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineBlack = mapObjects.addPolyline(new Polyline(polylinePointsBlack)); //отрисовка маршрута по точкам списка
+        polylineBlack.setStrokeColor(Color.BLACK);
     }
+
+
+
 }
