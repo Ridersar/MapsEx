@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
     private final Point MagentaRoute2 = new Point(51.522136,46.018522);
     private final Point GreenRoute1 = new Point(51.525276, 45.994920);
     private final Point GreenRoute2 = new Point(51.528515, 46.000392);
+    private final Point pointBlue1 = new Point(51.541023, 46.012058);
+    private final Point pointBlue2 = new Point(51.544455, 46.014134);
 
 
     private MapView mapView;
@@ -93,10 +95,15 @@ public class MainActivity extends Activity {
         polylinePoints.add(new Point(point2.getLatitude(), point2.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point3.getLatitude(), point3.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
+        ArrayList<Point> polylinePointsAlena = new ArrayList<>(); //создание списка точек
+        polylinePointsAlena.add(new Point(pointBlue1.getLatitude(), pointBlue1.getLongitude())); //добавление точки в список
+        polylinePointsAlena.add(new Point(pointBlue2.getLatitude(), pointBlue2.getLongitude())); //добавление точки в список
 
 
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         polyline.setStrokeColor(Color.RED);
+        PolylineMapObject polylineAlena = mapObjects.addPolyline(new Polyline(polylinePointsAlena)); //отрисовка маршрута по точкам списка
+        polylineAlena.setStrokeColor(Color.BLUE);
         //polyline.setZIndex(100.0f);
 
         ArrayList<Point> polylinePointsMagenta = new ArrayList<>();
