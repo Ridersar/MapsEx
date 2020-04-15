@@ -1,4 +1,4 @@
-package votaras.klaw.mapsex;
+package com.example.exampleapp;
 
 import org.junit.Test;
 
