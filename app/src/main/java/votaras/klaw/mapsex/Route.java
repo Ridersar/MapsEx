@@ -17,35 +17,51 @@ public class Route
     {
         //добавление в список (тестовое)
         mas.add(new OpPoint(0,0,0)); //null
-        mas.add(new OpPoint(51.528253, 46.000825, 2, 3, 5)); //1
-        mas.add(new OpPoint(51.528284, 46.007407, 1, 4)); //2
-        mas.add(new OpPoint(51.526316, 46.004129, 1, 4)); //3
-        mas.add(new OpPoint(51.525953, 46.012302, 2, 3, 6)); //4
-        mas.add(new OpPoint(51.522377, 46.000247, 1, 6)); //5
-        mas.add(new OpPoint(51.522229, 46.008572, 4, 5)); //6
+        mas.add(new OpPoint(51.533694, 46.014967, 2, 4)); //1
+        mas.add(new OpPoint(51.534387, 46.012199, 1, 3, 5)); //2
+        mas.add(new OpPoint(51.535070, 46.009447, 2, 6)); //3
+        mas.add(new OpPoint(51.535983, 46.016313, 1, 5, 7)); //4
+        mas.add(new OpPoint(51.536620, 46.013590, 2, 4, 6, 8)); //5
+        mas.add(new OpPoint(51.537257, 46.010808, 5, 5, 9)); //6
+        mas.add(new OpPoint(51.537746, 46.017283, 4, 8)); //7
+        mas.add(new OpPoint(51.538355, 46.014530, 5, 7, 9)); //8
+        mas.add(new OpPoint(51.538936, 46.011852, 6, 8)); //9
 
         //добавление весов (тестовое)
         mas.get(0).transitions.put(1, 1000);
         //1
-        mas.get(1).transitions.put(2, 1);
-        mas.get(1).transitions.put(3, 4);
-        mas.get(1).transitions.put(5, 2);
+        mas.get(1).transitions.put(2, 6);
+        mas.get(1).transitions.put(4, 8);
         //2
-        mas.get(2).transitions.put(1, 1);
-        mas.get(2).transitions.put(4, 9);
+        mas.get(2).transitions.put(1, 6);
+        mas.get(2).transitions.put(3, 5);
+        mas.get(2).transitions.put(5, 2);
         //3
-        mas.get(3).transitions.put(1, 4);
-        mas.get(3).transitions.put(4, 7);
+        mas.get(3).transitions.put(2, 5);
+        mas.get(3).transitions.put(6, 7);
         //4
-        mas.get(4).transitions.put(2, 9);
-        mas.get(4).transitions.put(3, 7);
-        mas.get(4).transitions.put(6, 2);
+        mas.get(4).transitions.put(1, 8);
+        mas.get(4).transitions.put(5, 4);
+        mas.get(4).transitions.put(7, 9);
         //5
-        mas.get(5).transitions.put(1, 2);
-        mas.get(5).transitions.put(6, 8);
+        mas.get(5).transitions.put(2, 2);
+        mas.get(5).transitions.put(4, 4);
+        mas.get(5).transitions.put(6, 3);
+        mas.get(5).transitions.put(8, 2);
         //6
-        mas.get(6).transitions.put(4, 2);
-        mas.get(6).transitions.put(5, 8);
+        mas.get(6).transitions.put(3, 7);
+        mas.get(6).transitions.put(5, 3);
+        mas.get(6).transitions.put(9, 8);
+        //7
+        mas.get(7).transitions.put(4, 9);
+        mas.get(7).transitions.put(8, 11);
+        //8
+        mas.get(8).transitions.put(5, 2);
+        mas.get(8).transitions.put(7, 11);
+        mas.get(8).transitions.put(9, 10);
+        //9
+        mas.get(9).transitions.put(6, 8);
+        mas.get(9).transitions.put(8, 10);
     }
 
     //отрисовка частей маршрута
