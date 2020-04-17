@@ -1,6 +1,7 @@
 package votaras.klaw.mapsex;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -77,15 +78,7 @@ public class MainActivity extends Activity {
 
        // createMapObjects();
         //createMapObjects(); //отрисовка объектов
-        ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
-        Route.createPoints(mas); //создание объектов
-        Route.drawRoute(mas); //отрисовка маршрутов
 
-        ArrayList<Point> route = Route.searchRoute(mas, 1, 5);; //маршрут
-
-
-        PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
-        polylineRoute.setStrokeColor(Color.RED);
     }
 
     @Override
@@ -123,6 +116,7 @@ public class MainActivity extends Activity {
     //создание объектов на карте
     private void createMapObjects()
     {
+        /*
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
         polylinePoints.add(new Point(point1.getLatitude(), point1.getLongitude())); //добавление точки в список
         polylinePoints.add(new Point(point2.getLatitude(), point2.getLongitude())); //добавление точки в список
@@ -149,6 +143,8 @@ public class MainActivity extends Activity {
         polylinePointsGreen.add(new Point(GreenRoute2.getLatitude(), GreenRoute2.getLongitude())); //добавление точки в список
         PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
         polylineGreen.setStrokeColor(Color.GREEN);
+        */
+
     }
 
 
