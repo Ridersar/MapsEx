@@ -3,6 +3,7 @@ package votaras.klaw.mapsex;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Pair;
 
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -15,11 +16,18 @@ import com.yandex.mapkit.mapview.MapView;
 
 
 
+
 import android.content.Intent; //подключаем класс Intent
 import android.os.Bundle;
 import android.view.View; // подключаем класс View для обработки нажатия кнопки
 import android.widget.Button;
 import android.widget.EditText; // подключаем класс EditText
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MainActivity extends Activity {
     /**
@@ -34,8 +42,11 @@ public class MainActivity extends Activity {
     private Handler animationHandler;
     private Button btn_create;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         /**
          * Задайте API-ключ перед инициализацией MapKitFactory.
          * Рекомендуется устанавливать ключ в методе Application.onCreate,
@@ -63,7 +74,18 @@ public class MainActivity extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
+
        // createMapObjects();
+        //createMapObjects(); //отрисовка объектов
+        ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
+        Route.createPoints(mas); //создание объектов
+        Route.drawRoute(mas); //отрисовка маршрутов
+
+        ArrayList<Point> route = Route.searchRoute(mas, 1, 5);; //маршрут
+
+
+        PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
+        polylineRoute.setStrokeColor(Color.RED);
     }
 
     @Override
@@ -83,6 +105,7 @@ public class MainActivity extends Activity {
     }
 
 
+
     // Метод обработки нажатия на кнопку
     public void addListenerOnButton () {
         btn_create = (Button)findViewById(R.id.btnCreate);
@@ -96,6 +119,38 @@ public class MainActivity extends Activity {
                 }
         );
     };
+
+    //создание объектов на карте
+    private void createMapObjects()
+    {
+        ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
+        polylinePoints.add(new Point(point1.getLatitude(), point1.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point2.getLatitude(), point2.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point3.getLatitude(), point3.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
+        ArrayList<Point> polylinePointsAlena = new ArrayList<>(); //создание списка точек
+        polylinePointsAlena.add(new Point(pointBlue1.getLatitude(), pointBlue1.getLongitude())); //добавление точки в список
+        polylinePointsAlena.add(new Point(pointBlue2.getLatitude(), pointBlue2.getLongitude())); //добавление точки в список
+
+        PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
+        polyline.setStrokeColor(Color.RED);
+        PolylineMapObject polylineAlena = mapObjects.addPolyline(new Polyline(polylinePointsAlena)); //отрисовка маршрута по точкам списка
+        polylineAlena.setStrokeColor(Color.BLUE);
+        //polyline.setZIndex(100.0f);
+
+        ArrayList<Point> polylinePointsMagenta = new ArrayList<>();
+        polylinePointsMagenta.add(new Point(MagentaRoute1.getLatitude(), MagentaRoute1.getLongitude())); //добавление точки в список
+        polylinePointsMagenta.add(new Point(MagentaRoute2.getLatitude(), MagentaRoute2.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineMagenta = mapObjects.addPolyline(new Polyline(polylinePointsMagenta)); //отрисовка маршрута по точкам списка
+        polylineMagenta.setStrokeColor(Color.MAGENTA);
+
+        ArrayList<Point> polylinePointsGreen = new ArrayList<>();
+        polylinePointsGreen.add(new Point(GreenRoute1.getLatitude(), GreenRoute1.getLongitude())); //добавление точки в список
+        polylinePointsGreen.add(new Point(GreenRoute2.getLatitude(), GreenRoute2.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
+        polylineGreen.setStrokeColor(Color.GREEN);
+    }
+
 
 
 
