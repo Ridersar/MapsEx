@@ -22,21 +22,21 @@ public class ActivityDisplayMessage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
-        addListenerOnButton ();
     };
-
+/*
     public void addListenerOnButton () {
         btn_go = (Button)findViewById(R.id.btnGO);
         btn_go.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(".MainActivity");
+                        Intent intent = new Intent(".activity_go_route");
                         startActivity(intent);
                     }
                 }
         );
     };
+*/
 
     public void onButtonClick(View v){
         EditText A = (EditText)findViewById(R.id.txtA);
@@ -44,4 +44,16 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         EditText KM = (EditText)findViewById(R.id.txtKM);
         EditText Time = (EditText)findViewById(R.id.txtTime);
     };
+
+    // Метод обработки нажатия на кнопку
+    public void sendMessage(View view) {
+        // действия, совершаемые после нажатия на кнопку
+        // Создаем объект Intent для вызова новой Activity
+        Intent intent = new Intent(this, GoRoute.class);
+
+        // запуск activity
+        startActivity(intent);
+
+    }
+
 }
