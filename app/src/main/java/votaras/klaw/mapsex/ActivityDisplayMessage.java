@@ -41,7 +41,7 @@ public class ActivityDisplayMessage extends AppCompatActivity {
     };
 */
 
-    public void onButtonClick(View v){
+    //public void onButtonClick(View v){
         /*
         EditText A = (EditText)findViewById(R.id.txtA);
         EditText B = (EditText)findViewById(R.id.txtB);
@@ -53,7 +53,7 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         int b = Integer.parseInt(B.toString());
          */
 
-    };
+    //};
 
     // Метод обработки нажатия на кнопку
     public void sendMessage(View view) {
