@@ -76,7 +76,25 @@ public class GoRoute extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
-         createMapObjects();
+
+        //получение информации из предыдущего activity
+        Intent intent = getIntent();
+        String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
+        String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
+
+        //конвертирование в int
+        int a = Integer.parseInt(A); //начало
+        int b = Integer.parseInt(B); //конец
+
+        ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
+        Route.createPoints(mas); //создание объектов
+        Route.drawRoute(mas); //отрисовка маршрутов
+
+        ArrayList<Point> route = Route.searchRoute(mas, a, b); //маршрут
+
+        PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
+        polylineRoute.setStrokeColor(Color.RED);
+         //createMapObjects();
     }
 
     @Override
