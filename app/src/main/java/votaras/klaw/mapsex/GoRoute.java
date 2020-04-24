@@ -20,7 +20,18 @@ import android.content.Intent; //подключаем класс Intent
 import android.os.Bundle;
 import android.view.View; // подключаем класс View для обработки нажатия кнопки
 import android.widget.Button;
-import android.widget.EditText; // подключаем класс EditText
+import android.widget.TextView;
+
+
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 public class GoRoute extends Activity {
     /**
@@ -95,6 +106,8 @@ public class GoRoute extends Activity {
         PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
         polylineRoute.setStrokeColor(Color.RED);
          //createMapObjects();
+         createMapObjects();
+
     }
 
     @Override
@@ -145,7 +158,63 @@ public class GoRoute extends Activity {
 
     }
 
+    final int DIALOG_EXIT = 1;
+    public void onclick(View v) {
+        // вызываем диалог
+        showDialog(DIALOG_EXIT);
+    }
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_EXIT) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            // заголовок
+            adb.setTitle(R.string.exit);
+            // сообщение
+            adb.setMessage(R.string.save_data);
+            // иконка
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            // кнопка положительного ответа
+            adb.setPositiveButton(R.string.yes, myClickListener);
+            // кнопка отрицательного ответа
+            adb.setNegativeButton(R.string.no, myClickListener);
+            // создаем диалог
+            return adb.create();
+        }
+        return super.onCreateDialog(id);
+    }
 
+    OnClickListener myClickListener = new OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                // положительная кнопка
+                case Dialog.BUTTON_POSITIVE:
+                    saveStatistics();
+                    StartScreen();
+                    //finish();
+                    break;
+                // негативная кнопка
+                case Dialog.BUTTON_NEGATIVE:
+                    break;
+
+            }
+        }
+    };
+
+     void StartScreen()
+    {
+        // действия, совершаемые после нажатия на кнопку
+        // Создаем объект Intent для вызова новой Activity
+        Intent intent = new Intent(this, MainActivity.class);
+        // запуск activity
+        startActivity(intent);
+    }
+
+    void saveStatistics()
+    {
+        //Здесь должна быть функция сохранения статистики...То, что внизу написано, после нажатия на
+        //кнопку "ДА" выводит такое окошечко маленькое с надписью "сохранено"
+        //я оставила на всякий, но можете удалить.
+        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+    }
 
 
 }

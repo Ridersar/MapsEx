@@ -20,6 +20,7 @@ public class ActivityDisplayMessage extends AppCompatActivity {
 
     public final static String A_str = "A";
     public final static String B_str = "B";
+    public final static String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,5 +70,12 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         startActivity(intent);
 
     }
+    public void onButtonClick(View v){
+        EditText A = (EditText)findViewById(R.id.txtA);
+        EditText B = (EditText)findViewById(R.id.txtB);
+        EditText KM = (EditText)findViewById(R.id.txtKM);
+        EditText Time = (EditText)findViewById(R.id.txtTime);
+    };
+
 
 }
