@@ -17,11 +17,32 @@ public class ActivityDisplayMessage extends AppCompatActivity {
 
     private EditText A, B, KM, Time;
     private Button btn_go;
-    public final static String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
+    };
+/*
+    public void addListenerOnButton () {
+        btn_go = (Button)findViewById(R.id.btnGO);
+        btn_go.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(".activity_go_route");
+                        startActivity(intent);
+                    }
+                }
+        );
+    };
+*/
+
+    public void onButtonClick(View v){
+        EditText A = (EditText)findViewById(R.id.txtA);
+        EditText B = (EditText)findViewById(R.id.txtB);
+        EditText KM = (EditText)findViewById(R.id.txtKM);
+        EditText Time = (EditText)findViewById(R.id.txtTime);
     };
 
     // Метод обработки нажатия на кнопку
@@ -34,12 +55,5 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         startActivity(intent);
 
     }
-    public void onButtonClick(View v){
-        EditText A = (EditText)findViewById(R.id.txtA);
-        EditText B = (EditText)findViewById(R.id.txtB);
-        EditText KM = (EditText)findViewById(R.id.txtKM);
-        EditText Time = (EditText)findViewById(R.id.txtTime);
-    };
-
 
 }
