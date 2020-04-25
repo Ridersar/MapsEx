@@ -76,6 +76,4 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         EditText KM = (EditText)findViewById(R.id.txtKM);
         EditText Time = (EditText)findViewById(R.id.txtTime);
     };
-
-
 }

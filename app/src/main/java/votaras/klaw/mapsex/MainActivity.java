@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
     private MapView mapView;
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
-    private Button btn_create;
+    private Button btn_create, btn_statistics;
 
 
 
@@ -107,6 +107,16 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(".ActivityDisplayMessage");
+                        startActivity(intent);
+                    }
+                }
+        );
+        btn_statistics = (Button)findViewById(R.id.btnStatistics);
+        btn_statistics.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(".Statistics");
                         startActivity(intent);
                     }
                 }
