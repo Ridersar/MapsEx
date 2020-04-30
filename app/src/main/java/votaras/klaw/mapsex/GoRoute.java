@@ -18,6 +18,8 @@ import com.yandex.mapkit.map.PolylineMapObject;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.transport.Transport;
 import com.yandex.mapkit.transport.TransportFactory;
+import com.yandex.mapkit.transport.masstransit.MasstransitOptions;
+import com.yandex.mapkit.transport.masstransit.MasstransitRouter;
 import com.yandex.mapkit.transport.masstransit.PedestrianRouter;
 import com.yandex.mapkit.transport.masstransit.Route;
 import com.yandex.mapkit.transport.masstransit.Session;
@@ -64,6 +66,13 @@ public class GoRoute extends Activity {
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
     private Button btn_create;
+
+    private final Point ROUTE_START_LOCATION = new Point(51.528021, 46.021923);
+    private final Point ROUTE_END_LOCATION = new Point(51.522136, 46.018522);
+
+
+    private PedestrianRouter router;
+    private MasstransitRouter mtRouter;
     //попытка геокода
   /*  public Point getLocationFromAddress(String strAddress) throws IOException {
 
@@ -89,12 +98,29 @@ public class GoRoute extends Activity {
         }
         return p1;
     }*/
-    public void routeBetween(double longitude, double latitude, double lat, double lon){
+    public void routeBetween(double lat1, double lon1, double lat2, double lon2){
         Transport transport = TransportFactory.getInstance();
-        PedestrianRouter router = transport.createPedestrianRouter();
+        router = transport.createPedestrianRouter();
+        /*
+        MasstransitOptions options = new MasstransitOptions(
+                new ArrayList<String>(),
+                new ArrayList<String>(),
+                new TimeOptions());
+        List<RequestPoint> points = new ArrayList<RequestPoint>();
+        points.add(new RequestPoint(ROUTE_START_LOCATION, RequestPointType.WAYPOINT, null));
+        points.add(new RequestPoint(ROUTE_END_LOCATION, RequestPointType.WAYPOINT, null));
+        //mtRouter = TransportFactory.getInstance().createMasstransitRouter();
+        //mtRouter.requestRoutes(points, options, this);
+        */
+
+
         ArrayList<RequestPoint> requests = new ArrayList<>();
-        requests.add(new RequestPoint(new Point(latitude, longitude), RequestPointType.WAYPOINT, ""));
-        requests.add(new RequestPoint(new Point(lat, lon), RequestPointType.WAYPOINT, ""));
+        //requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
+        requests.add(new RequestPoint(new Point(lat2, lon2), RequestPointType.WAYPOINT, ""));
+        requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
+        requests.add(new RequestPoint(new Point(51.531503, 46.004495), RequestPointType.WAYPOINT, ""));
+        requests.add(new RequestPoint(new Point(51.531903, 46.004995), RequestPointType.WAYPOINT, ""));
+
         router.requestRoutes(requests, new TimeOptions(), new Session.RouteListener() {
             @Override
             public void onMasstransitRoutes(@NonNull List<com.yandex.mapkit.transport.masstransit.Route> list) {
@@ -109,7 +135,8 @@ public class GoRoute extends Activity {
 
             @Override
             public void onMasstransitRoutesError(@NonNull Error error) {
-                System.out.println(error);
+                //System.out.println(error);
+                System.out.println("Oshibka");
             }
         });
     }
@@ -133,7 +160,7 @@ public class GoRoute extends Activity {
         setContentView(R.layout.activity_go_route);
         super.onCreate(savedInstanceState);
         mapView = (MapView)findViewById(R.id.mapview);
-
+        TransportFactory.initialize(this);
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
                 new CameraPosition(TARGET_LOCATION, 14.0f, 0.0f, 0.0f),
@@ -182,8 +209,10 @@ public class GoRoute extends Activity {
         //int a = Integer.parseInt(A); //начало
         //int b = Integer.parseInt(B); //конец
         mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
+        //mapView.getMap().getMapObjects().addPlacemark(new Point(51.517900, 46.010900));
         try{
-            routeBetween(aa,bb,51.517547, 46.010487);
+            //routeBetween(aa,bb,51.517547, 46.010487);
+            routeBetween(51.528515, 46.000392,51.517547, 46.010487);
         }catch (NullPointerException e){
             System.out.println("GPS is off");
         }
