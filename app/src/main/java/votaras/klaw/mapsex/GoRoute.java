@@ -177,45 +177,59 @@ public class GoRoute extends Activity {
 
 
         ArrayList<RequestPoint> requests = new ArrayList<>();
-        //Geocoder geocoder = new Geocoder(getApplicationContext());
+        Geocoder geocoder = new Geocoder(getApplicationContext());
         //List<Address> addresses;
-        //ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
 //попытка геокодирования
-     /*   try {
-            addresses = geocoder.getFromLocationName(A, 1);
-            addresses=geocoder.getFromLocationName(B,1);
-            if(addresses.size() > 0) {
-                double latitude= addresses.get(0).getLatitude();
-                double longitude= addresses.get(0).getLongitude();
-                double latitude1= addresses.get(1).getLatitude();
-                double longitude1= addresses.get(1).getLongitude();
+        try {
+            //addresses = geocoder.getFromLocationName(A, 1);
+            Address a = geocoder.getFromLocationName(A, 1).get(0);
+            addresses.add(a);
+            //addresses=geocoder.getFromLocationName(B,1);
+            if(addresses != null) //addresses.size() > 0
+            {
+                double lat=51.529515;
+                double lon=46.001392;
+                lat= addresses.get(0).getLatitude();
+                lon= addresses.get(0).getLongitude();
+                mapView.getMap().getMapObjects().addPlacemark(new Point(lat, lon));
+
+
+                //double latitude1= addresses.get(1).getLatitude();
+                //double longitude1= addresses.get(1).getLongitude();
                // polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
                 //polylinePoints.add(new Point(latitude1,longitude1)); //добавление точки в список
-                p1=new Point(latitude, longitude);
-                p2=new Point(latitude1, longitude1);
+                //p1=new Point(latitude, longitude);
+                //p2=new Point(latitude1, longitude1);
             }
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) //IOException e
+        {
            // Toast.makeText(GoRoute.this,"Sorry, can you select again?", Toast.LENGTH_SHORT);
             e.printStackTrace();
-        }*/
+        }
         //PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         //polyline.setStrokeColor(Color.RED);
 
         //конвертирование в int
-        double aa=Double.parseDouble(A);
-        double bb=Double.parseDouble(B);
+        //double aa=Double.parseDouble(A);
+        //double bb=Double.parseDouble(B);
+
         //int a = Integer.parseInt(A); //начало
         //int b = Integer.parseInt(B); //конец
-        mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
+        //mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
+
+        //ПОСТРОЕНИЕ МАРШРУТА
         //mapView.getMap().getMapObjects().addPlacemark(new Point(51.517900, 46.010900));
-        try{
+        /*try{
             //routeBetween(aa,bb,51.517547, 46.010487);
-            routeBetween(51.528515, 46.000392,51.517547, 46.010487);
+            //routeBetween(51.528515, 46.000392,51.517547, 46.010487);
         }catch (NullPointerException e){
             System.out.println("GPS is off");
-        }
+        }*/
         //ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         //Route.createPoints(mas); //создание объектов
         //Route.drawRoute(mas); //отрисовка маршрутов
