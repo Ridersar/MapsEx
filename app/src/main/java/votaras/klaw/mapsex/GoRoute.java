@@ -177,30 +177,24 @@ public class GoRoute extends Activity {
         String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
         String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
 
-
+      /*
+        //ГЕОКОДИРОВАНИЕ
         ArrayList<RequestPoint> requests = new ArrayList<>();
         //Geocoder geocoder = new Geocoder(getApplicationContext());
         Geocoder geocoder = new Geocoder(this); //Locale.US
-        //List<Address> addresses;
         List<Address> addresses = new ArrayList<Address>(); //ArrayList
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
-        //A = "Slonova 10";
-        //A = "Russia, Saratov, Slonova, 10/16";
         //A = "Саратов, Слонова, 10/16";
-        //A = "Саратов, Слонова-Рабочая";
-//попытка геокодирования
         try {
             //List<Address> list = geocoder.getFromLocationName(A, 1);
             //Address add = list.get(0);
-            //addresses = geocoder.getFromLocationName(A, 1);
-            addresses = geocoder.getFromLocationName(A, 1);
+            addresses = geocoder.getFromLocationName(A, 1); //получение координат по названию
             //Address a = geocoder.getFromLocationName(A, 1).get(0);
             //addresses.add(a);
-            //Log.i("", A);
             int lengt = addresses.size(); //длина массива
             String Slengt = Integer.toString(lengt); //длина массива (строка)
-            Log.i("Dlina", Slengt); //вывод информации
+            Log.i("Length - ", Slengt); //вывод информации
             //addresses=geocoder.getFromLocationName(B,1);
             if(addresses != null) //addresses.size() > 0
             {
@@ -213,7 +207,7 @@ public class GoRoute extends Activity {
 
                 //double latitude1= addresses.get(1).getLatitude();
                 //double longitude1= addresses.get(1).getLongitude();
-               // polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
+                //polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
                 //polylinePoints.add(new Point(latitude1,longitude1)); //добавление точки в список
                 //p1=new Point(latitude, longitude);
                 //p2=new Point(latitude1, longitude1);
@@ -236,14 +230,14 @@ public class GoRoute extends Activity {
         //int b = Integer.parseInt(B); //конец
         //mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
 
+*/
         //ПОСТРОЕНИЕ МАРШРУТА
-        //mapView.getMap().getMapObjects().addPlacemark(new Point(51.517900, 46.010900));
-        /*try{
+        try{
             //routeBetween(aa,bb,51.517547, 46.010487);
-            //routeBetween(51.528515, 46.000392,51.517547, 46.010487);
+            routeBetween(51.528515, 46.000392,51.517547, 46.010487);
         }catch (NullPointerException e){
             System.out.println("GPS is off");
-        }*/
+        }
         //ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         //Route.createPoints(mas); //создание объектов
         //Route.drawRoute(mas); //отрисовка маршрутов
