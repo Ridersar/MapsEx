@@ -29,9 +29,11 @@ import com.yandex.runtime.Error;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Intent; //подключаем класс Intent
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View; // подключаем класс View для обработки нажатия кнопки
 import android.widget.Button;
 import android.widget.EditText; // подключаем класс EditText
@@ -177,16 +179,28 @@ public class GoRoute extends Activity {
 
 
         ArrayList<RequestPoint> requests = new ArrayList<>();
-        Geocoder geocoder = new Geocoder(getApplicationContext());
+        //Geocoder geocoder = new Geocoder(getApplicationContext());
+        Geocoder geocoder = new Geocoder(this); //Locale.US
         //List<Address> addresses;
-        ArrayList<Address> addresses = new ArrayList<Address>();
+        List<Address> addresses = new ArrayList<Address>(); //ArrayList
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
+        //A = "Slonova 10";
+        //A = "Russia, Saratov, Slonova, 10/16";
+        //A = "Саратов, Слонова, 10/16";
+        //A = "Саратов, Слонова-Рабочая";
 //попытка геокодирования
         try {
+            //List<Address> list = geocoder.getFromLocationName(A, 1);
+            //Address add = list.get(0);
             //addresses = geocoder.getFromLocationName(A, 1);
-            Address a = geocoder.getFromLocationName(A, 1).get(0);
-            addresses.add(a);
+            addresses = geocoder.getFromLocationName(A, 1);
+            //Address a = geocoder.getFromLocationName(A, 1).get(0);
+            //addresses.add(a);
+            //Log.i("", A);
+            int lengt = addresses.size(); //длина массива
+            String Slengt = Integer.toString(lengt); //длина массива (строка)
+            Log.i("Dlina", Slengt); //вывод информации
             //addresses=geocoder.getFromLocationName(B,1);
             if(addresses != null) //addresses.size() > 0
             {
