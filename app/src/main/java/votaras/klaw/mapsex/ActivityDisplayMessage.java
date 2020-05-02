@@ -41,20 +41,6 @@ public class ActivityDisplayMessage extends AppCompatActivity {
     };
 */
 
-    //public void onButtonClick(View v){
-        /*
-        EditText A = (EditText)findViewById(R.id.txtA);
-        EditText B = (EditText)findViewById(R.id.txtB);
-        EditText KM = (EditText)findViewById(R.id.txtKM);
-        EditText Time = (EditText)findViewById(R.id.txtTime);
-
-        //конвертирование в int
-        int a = Integer.parseInt(A.toString());
-        int b = Integer.parseInt(B.toString());
-         */
-
-    //};
-
     // Метод обработки нажатия на кнопку
     public void sendMessage(View view) {
         // действия, совершаемые после нажатия на кнопку
@@ -62,18 +48,13 @@ public class ActivityDisplayMessage extends AppCompatActivity {
         Intent intent = new Intent(this, GoRoute.class);
         EditText A = (EditText)findViewById(R.id.txtA);
         EditText B = (EditText)findViewById(R.id.txtB);
+        //EditText KM = (EditText)findViewById(R.id.txtKM);
+        //EditText Time = (EditText)findViewById(R.id.txtTime);
 
         //передаем значения в объект intent
         intent.putExtra(A_str, A.getText().toString());
         intent.putExtra(B_str, B.getText().toString());
         // запуск activity
         startActivity(intent);
-
     }
-    public void onButtonClick(View v){
-        EditText A = (EditText)findViewById(R.id.txtA);
-        EditText B = (EditText)findViewById(R.id.txtB);
-        EditText KM = (EditText)findViewById(R.id.txtKM);
-        EditText Time = (EditText)findViewById(R.id.txtTime);
-    };
 }

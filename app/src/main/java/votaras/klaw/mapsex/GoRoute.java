@@ -188,7 +188,7 @@ public class GoRoute extends Activity {
                 // положительная кнопка
                 case Dialog.BUTTON_POSITIVE:
                     saveStatistics();
-                    StartScreen();
+                    CompletionScreen();
                     //finish();
                     break;
                 // негативная кнопка
@@ -199,22 +199,18 @@ public class GoRoute extends Activity {
         }
     };
 
-     void StartScreen()
-    {
+     void CompletionScreen() {
         // действия, совершаемые после нажатия на кнопку
         // Создаем объект Intent для вызова новой Activity
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Completion.class);
         // запуск activity
         startActivity(intent);
     }
 
-    void saveStatistics()
-    {
+    void saveStatistics() {
         //Здесь должна быть функция сохранения статистики...То, что внизу написано, после нажатия на
         //кнопку "ДА" выводит такое окошечко маленькое с надписью "сохранено"
         //я оставила на всякий, но можете удалить.
         Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
     }
-
-
 }

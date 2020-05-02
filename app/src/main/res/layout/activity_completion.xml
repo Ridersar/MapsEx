@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Completion">
+
+    <TextView
+        android:id="@+id/lblCompTime"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="monospace"
+        android:padding="10sp"
+        android:text="Время"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblCompKM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtCompTime"
+        android:layout_width="125sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="monospace"
+        android:inputType="time"
+        android:padding="10sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/txtCompKM"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblCompKM"
+        android:layout_width="165sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="monospace"
+        android:padding="10sp"
+        android:text="Километраж"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblCompPercent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCompTime" />
+
+    <EditText
+        android:id="@+id/txtCompKM"
+        android:layout_width="125sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="monospace"
+        android:inputType="number"
+        android:padding="10sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/txtCompPercent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCompTime" />
+
+    <TextView
+        android:id="@+id/lblCompPercent"
+        android:layout_width="210sp"
+        android:layout_height="80sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="300dp"
+        android:fontFamily="monospace"
+        android:padding="10sp"
+        android:text="Процент завершённости"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCompKM" />
+
+    <EditText
+        android:id="@+id/txtCompPercent"
+        android:layout_width="125sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="300dp"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="monospace"
+        android:inputType="number"
+        android:padding="10sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCompKM" />
+
+    <Button
+        android:id="@+id/btnCompHome"
+        android:layout_width="0sp"
+        android:layout_height="70sp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/fields"
+        android:fontFamily="monospace"
+        android:onClick="onHomeClick"
+        android:padding="20sp"
+        android:text="HOME"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCompPercent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

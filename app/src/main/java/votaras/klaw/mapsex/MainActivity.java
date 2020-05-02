@@ -43,8 +43,6 @@ public class MainActivity extends Activity {
     private Handler animationHandler;
     private Button btn_create, btn_statistics;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -96,8 +94,6 @@ public class MainActivity extends Activity {
         MapKitFactory.getInstance().onStart();
         mapView.onStart();
     }
-
-
 
     // Метод обработки нажатия на кнопку
     public void addListenerOnButton () {
@@ -156,8 +152,5 @@ public class MainActivity extends Activity {
         */
 
     }
-
-
-
 
 }

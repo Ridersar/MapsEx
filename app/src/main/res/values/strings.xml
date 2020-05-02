@@ -16,5 +16,6 @@
     <string name="no">Нет</string>
     <string name="saved">Сохранено</string>
     <string name="title_activity_statistics">Statistics</string>
+    <string name="title_activity_completion">Completion</string>
 
 </resources>
