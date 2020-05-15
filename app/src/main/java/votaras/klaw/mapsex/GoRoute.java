@@ -5,6 +5,10 @@ import android.graphics.Color;
 import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -64,6 +68,7 @@ public class GoRoute extends Activity {
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
     private Button btn_create;
+    private LocationManager locationManager;
     //попытка геокода
   /*  public Point getLocationFromAddress(String strAddress) throws IOException {
 
@@ -89,7 +94,7 @@ public class GoRoute extends Activity {
         }
         return p1;
     }*/
-    public void routeBetween(double longitude, double latitude, double lat, double lon){
+    /*public void routeBetween(double longitude, double latitude, double lat, double lon){
         Transport transport = TransportFactory.getInstance();
         PedestrianRouter router = transport.createPedestrianRouter();
         ArrayList<RequestPoint> requests = new ArrayList<>();
@@ -112,7 +117,7 @@ public class GoRoute extends Activity {
                 System.out.println(error);
             }
         });
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +147,7 @@ public class GoRoute extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
-
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         //получение информации из предыдущего activity
         Intent intent = getIntent();
         String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
@@ -150,12 +155,12 @@ public class GoRoute extends Activity {
 
 
         ArrayList<RequestPoint> requests = new ArrayList<>();
-        //Geocoder geocoder = new Geocoder(getApplicationContext());
+       // Geocoder geocoder = new Geocoder(getApplicationContext());
         //List<Address> addresses;
         //ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
 //попытка геокодирования
-     /*   try {
+        /*try {
             addresses = geocoder.getFromLocationName(A, 1);
             addresses=geocoder.getFromLocationName(B,1);
             if(addresses.size() > 0) {
@@ -172,21 +177,21 @@ public class GoRoute extends Activity {
         } catch (IOException e) {
            // Toast.makeText(GoRoute.this,"Sorry, can you select again?", Toast.LENGTH_SHORT);
             e.printStackTrace();
-        }*/
+        }
         //PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         //polyline.setStrokeColor(Color.RED);
 
         //конвертирование в int
-        double aa=Double.parseDouble(A);
-        double bb=Double.parseDouble(B);
+        //double aa=Double.parseDouble(A);
+        //double bb=Double.parseDouble(B);
         //int a = Integer.parseInt(A); //начало
         //int b = Integer.parseInt(B); //конец
-        mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
-        try{
-            routeBetween(aa,bb,51.517547, 46.010487);
-        }catch (NullPointerException e){
-            System.out.println("GPS is off");
-        }
+        mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));*/
+        //try{
+            //routeBetween(aa,bb,51.517547, 46.010487);
+        //}catch (NullPointerException e){
+          //  System.out.println("GPS is off");
+        //}
         //ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         //Route.createPoints(mas); //создание объектов
         //Route.drawRoute(mas); //отрисовка маршрутов
@@ -196,6 +201,20 @@ public class GoRoute extends Activity {
         //PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
         //polylineRoute.setStrokeColor(Color.RED);
          //createMapObjects();
+    }
+    @Override
+    protected  void onResume(){
+        super.onResume();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000 * 0, 10, locationListener);
+        locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 1000 * 0, 10,
+                locationListener);
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
     }
 
     @Override
@@ -213,7 +232,42 @@ public class GoRoute extends Activity {
         MapKitFactory.getInstance().onStart();
         mapView.onStart();
     }
+private LocationListener locationListener = new LocationListener() {
+    @Override
+    public void onLocationChanged(Location location) {
+        showLocation(location);
+    }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        showLocation(locationManager.getLastKnownLocation(provider));
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+};
+    private void showLocation(Location location) {
+        if (location == null)
+            return;
+        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+            mapView.getMap().getMapObjects().addPlacemark(formatLocation(location));
+        } else if (location.getProvider().equals(
+                LocationManager.NETWORK_PROVIDER)) {
+            mapView.getMap().getMapObjects().addPlacemark(formatLocation(location));
+        }
+    }
+
+    private Point formatLocation(Location location) {
+        Point a=new Point(location.getLatitude(), location.getLongitude());
+        return a;
+    }
     //создание объектов на карте
     private void createMapObjects() {
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
