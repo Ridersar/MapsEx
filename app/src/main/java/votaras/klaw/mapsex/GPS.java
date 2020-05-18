@@ -1,6 +1,7 @@
 package votaras.klaw.mapsex;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,17 +17,19 @@ public class GPS {
     Context m_context;
     Location m_location;
     LocationManager m_locationManager;
-    String m_provider = LocationManager.GPS_PROVIDER;
+    //String m_provider=LocationManager.GPS_PROVIDER;
+    String m_provider = LocationManager.NETWORK_PROVIDER;
 
     GPS(Context context) {
         m_context = context;
         m_locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+       if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+      // checkPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION,)
         m_locationManager.requestLocationUpdates(m_provider, 0, 10, new LocationListener() {
             public void onLocationChanged(Location location) {
                 m_location = location;
@@ -49,18 +52,19 @@ public class GPS {
     Location getLocation() {
         if (m_location == null)
             if (ActivityCompat.checkSelfPermission(m_context, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED ||
+                    == PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(m_context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                            != PackageManager.PERMISSION_GRANTED)
+                            == PackageManager.PERMISSION_GRANTED)
+
                 m_location = m_locationManager.getLastKnownLocation(m_provider);
 
 
         if (m_location == null) {
             m_location = new Location(m_provider);
-            m_location.setLatitude(0);
-            m_location.setLongitude(0);
-            //m_location.setLatitude(51.517547);
-           // m_location.setLongitude(46.010487);
+           // m_location.setLatitude(0);
+            //m_location.setLongitude(0);
+            m_location.setLatitude(51.517547);
+            m_location.setLongitude(46.010487);
             m_location.setAltitude(0);
         }
         return m_location;
