@@ -1,7 +1,12 @@
 package votaras.klaw.mapsex;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -16,14 +21,13 @@ import com.yandex.mapkit.map.PolylineMapObject;
 import com.yandex.mapkit.mapview.MapView;
 
 
-
-
-
 import android.content.Intent; //подключаем класс Intent
 import android.os.Bundle;
 import android.view.View; // подключаем класс View для обработки нажатия кнопки
 import android.widget.Button;
 import android.widget.EditText; // подключаем класс EditText
+
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,8 +51,7 @@ public class MainActivity extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         /**
          * Задайте API-ключ перед инициализацией MapKitFactory.
          * Рекомендуется устанавливать ключ в методе Application.onCreate,
@@ -61,12 +64,13 @@ public class MainActivity extends Activity {
          * Рекомендуется инициализировать библиотеку MapKit в методе Activity.onCreate
          * Инициализация в методе Application.onCreate может привести к лишним вызовам и увеличенному использованию батареи.
          */
+
         MapKitFactory.initialize(this);
         // Создание MapView.
         setContentView(R.layout.activity_main);
-        addListenerOnButton ();
+        addListenerOnButton();
         super.onCreate(savedInstanceState);
-        mapView = (MapView)findViewById(R.id.mapview);
+        mapView = (MapView) findViewById(R.id.mapview);
 
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
@@ -76,9 +80,9 @@ public class MainActivity extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
-
-       // createMapObjects();
+        // createMapObjects();
         //createMapObjects(); //отрисовка объектов
+
 
     }
 
@@ -98,8 +102,6 @@ public class MainActivity extends Activity {
         mapView.onStart();
     }
 
-
-
     // Метод обработки нажатия на кнопку
     public void addListenerOnButton () {
         btn_create = (Button)findViewById(R.id.btnCreate);
@@ -107,12 +109,16 @@ public class MainActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(".ActivityDisplayMessage");
-                        startActivity(intent);
+
+                       Intent intent = new Intent(".ActivityDisplayMessage");
+                       startActivity(intent);
                     }
                 }
         );
+
     };
+
+
 
     //создание объектов на карте
     private void createMapObjects()

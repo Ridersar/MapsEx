@@ -2,6 +2,7 @@
 //этот код - не мой, предлагается с помощью одной переменной всегда определять местоположение.
 //для кнопки - хорошее решение, но вести по маршруту с этим не реально
 //попробуй на реальном устройстве
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;

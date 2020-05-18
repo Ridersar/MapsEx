@@ -1,6 +1,8 @@
 package votaras.klaw.mapsex;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ import android.location.Geocoder;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 public class GoRoute extends Activity {
     /**
@@ -53,11 +56,11 @@ public class GoRoute extends Activity {
     private final Point point2 = new Point(51.527569, 46.011533);
     private final Point point3 = new Point(51.525753, 46.010434);
     private final Point point4 = new Point(51.520771, 46.002646);
-   private Point p1,p2;
+    private Point p1, p2;
 
 
-    private final Point MagentaRoute1 = new Point(51.528021,46.021923);
-    private final Point MagentaRoute2 = new Point(51.522136,46.018522);
+    private final Point MagentaRoute1 = new Point(51.528021, 46.021923);
+    private final Point MagentaRoute2 = new Point(51.522136, 46.018522);
     private final Point GreenRoute1 = new Point(51.525276, 45.994920);
     private final Point GreenRoute2 = new Point(51.528515, 46.000392);
     private final Point pointBlue1 = new Point(51.541023, 46.012058);
@@ -68,7 +71,8 @@ public class GoRoute extends Activity {
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
     private Button btn_create;
-    private LocationManager locationManager;
+    GPS m_gps;
+
     //попытка геокода
   /*  public Point getLocationFromAddress(String strAddress) throws IOException {
 
@@ -133,11 +137,12 @@ public class GoRoute extends Activity {
          * Рекомендуется инициализировать библиотеку MapKit в методе Activity.onCreate
          * Инициализация в методе Application.onCreate может привести к лишним вызовам и увеличенному использованию батареи.
          */
+        m_gps=new GPS(this);
         MapKitFactory.initialize(this);
         // Создание MapView.
         setContentView(R.layout.activity_go_route);
         super.onCreate(savedInstanceState);
-        mapView = (MapView)findViewById(R.id.mapview);
+        mapView = (MapView) findViewById(R.id.mapview);
 
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
@@ -147,15 +152,19 @@ public class GoRoute extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         //получение информации из предыдущего activity
         Intent intent = getIntent();
         String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
         String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
-
-
+        Location location=m_gps.getLocation();
+        Point my_gps=new Point(location.getLatitude(),location.getLongitude());
+        mapView.getMap().getMapObjects().addPlacemark(my_gps);
+//        MyLocationListener.SetUpLocationListener(this);
         ArrayList<RequestPoint> requests = new ArrayList<>();
-       // Geocoder geocoder = new Geocoder(getApplicationContext());
+        //      mapView.getMap().getMapObjects().addPlacemark(new Point(MyLocationListener.imHere.getLatitude(),MyLocationListener.imHere.getLongitude()));
+
+        // Geocoder geocoder = new Geocoder(getApplicationContext());
         //List<Address> addresses;
         //ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
@@ -188,34 +197,22 @@ public class GoRoute extends Activity {
         //int b = Integer.parseInt(B); //конец
         mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));*/
         //try{
-            //routeBetween(aa,bb,51.517547, 46.010487);
+        //routeBetween(aa,bb,51.517547, 46.010487);
         //}catch (NullPointerException e){
-          //  System.out.println("GPS is off");
+        //  System.out.println("GPS is off");
         //}
         //ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         //Route.createPoints(mas); //создание объектов
         //Route.drawRoute(mas); //отрисовка маршрутов
 
-       // ArrayList<Point> route = Route.searchRoute(mas, a, b); //маршрут
+        // ArrayList<Point> route = Route.searchRoute(mas, a, b); //маршрут
 
         //PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
         //polylineRoute.setStrokeColor(Color.RED);
-         //createMapObjects();
+        //createMapObjects();
     }
-    @Override
-    protected  void onResume(){
-        super.onResume();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 0, 10, locationListener);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 1000 * 0, 10,
-                locationListener);
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        locationManager.removeUpdates(locationListener);
-    }
+
+
 
     @Override
     protected void onStop() {
@@ -232,42 +229,8 @@ public class GoRoute extends Activity {
         MapKitFactory.getInstance().onStart();
         mapView.onStart();
     }
-private LocationListener locationListener = new LocationListener() {
-    @Override
-    public void onLocationChanged(Location location) {
-        showLocation(location);
-    }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        showLocation(locationManager.getLastKnownLocation(provider));
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-};
-    private void showLocation(Location location) {
-        if (location == null)
-            return;
-        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-            mapView.getMap().getMapObjects().addPlacemark(formatLocation(location));
-        } else if (location.getProvider().equals(
-                LocationManager.NETWORK_PROVIDER)) {
-            mapView.getMap().getMapObjects().addPlacemark(formatLocation(location));
-        }
-    }
-
-    private Point formatLocation(Location location) {
-        Point a=new Point(location.getLatitude(), location.getLongitude());
-        return a;
-    }
     //создание объектов на карте
     private void createMapObjects() {
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
