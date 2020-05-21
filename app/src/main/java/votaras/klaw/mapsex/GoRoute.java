@@ -81,8 +81,8 @@ public class GoRoute extends Activity {
 
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
-                new CameraPosition(TARGET_LOCATION, 14.0f, 0.0f, 0.0f),
-                new Animation(Animation.Type.SMOOTH, 5),
+                new CameraPosition(TARGET_LOCATION, 16.0f, 0.0f, 0.0f),
+                new Animation(Animation.Type.LINEAR, 0),
                 null);
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();

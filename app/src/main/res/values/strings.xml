@@ -11,12 +11,10 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
-
+        //диалоговое окно
         <string name="exit">Выход</string>
         <string name="save_data">Вы действительно хотите выйти?</string>
         <string name="yes">Да</string>
         <string name="no">Нет</string>
         <string name="saved">Сохранено</string>
-
-
 </resources>
