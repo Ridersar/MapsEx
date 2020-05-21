@@ -143,7 +143,7 @@ public class MainActivity extends Activity {
 
                         //тестирование БД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
+                        /*
                         //заполнение БД
 
 
@@ -203,6 +203,7 @@ public class MainActivity extends Activity {
                         //закрытие
                         myCursor.close();
                         cursor.close();
+                        */
                     }
                 }
         );

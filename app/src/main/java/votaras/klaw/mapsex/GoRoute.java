@@ -1,6 +1,9 @@
 package votaras.klaw.mapsex;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -210,7 +213,63 @@ public class GoRoute extends Activity {
     void saveStatistics() {
         //Здесь должна быть функция сохранения статистики...То, что внизу написано, после нажатия на
         //кнопку "ДА" выводит такое окошечко маленькое с надписью "сохранено"
-        //я оставила на всякий, но можете удалить.
+
+        //Сохранение в статистику
+
+        //заполнение БД
+        SQLiteDatabase myDB;
+        //создание / открытие базы данных
+        myDB =
+                openOrCreateDatabase("my.db", MODE_PRIVATE, null);
+
+        //создание базы данных
+        myDB.execSQL(
+                "CREATE TABLE IF NOT EXISTS user (numberOfRoutes INT, flag INT)"
+        );
+
+        //Есть ли в базе данных что-то?
+        boolean fl = false;
+
+        Cursor cursor = myDB.query("user", new String[] { "numberOfRoutes",
+                        "flag"}, "flag" + " = "+1,
+                null, null, null, null, null);
+        if (cursor.getCount() > 0)
+            fl = true;
+
+        //Если база данных пуста - заполнение начальными значениями
+        if (fl == false)
+        {
+            ContentValues inf1 = new ContentValues();
+            inf1.put("numberOfRoutes", 1); //заполнение начальной информацией
+            inf1.put("flag", 1); //сигнал о том, что ячейка создана
+            myDB.insert("user", null, inf1);
+        }
+
+
+        //запрос
+        Cursor myCursor =
+                myDB.rawQuery("select numberOfRoutes, flag from user", null);
+
+        //проход по БД
+        int num = -111; //начальное значение, символизирует ошибку
+        while(myCursor.moveToNext())
+        {
+            num = myCursor.getInt(0);
+        }
+
+        num++; //увеличение посещений
+        ContentValues rowUp = new ContentValues();
+        rowUp.put("numberOfRoutes", num);
+        String where = "flag" + "=" + 1;
+        myDB.update("user", rowUp, where, null);
+
+        //закрытие
+        myCursor.close();
+        cursor.close();
+
+
+
+
         Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
     }
 }
