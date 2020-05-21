@@ -131,12 +131,24 @@ public class GoRoute extends Activity {
         */
 
 
+        ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
+        MyRoute.createPoints(mas); //создание объектов
+        //Route.drawRoute(mas); //отрисовка маршрутов
+        ArrayList<Point> route = MyRoute.searchRoute(mas, 1, 9); //маршрут
+
         ArrayList<RequestPoint> requests = new ArrayList<>();
+
+        for (int i = 0; i < route.size(); i++)
+        {
+            requests.add(new RequestPoint(new Point(route.get(i).getLatitude(), route.get(i).getLongitude()), RequestPointType.WAYPOINT, ""));
+        }
+
+
         //requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
-        requests.add(new RequestPoint(new Point(lat2, lon2), RequestPointType.WAYPOINT, ""));
-        requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
-        requests.add(new RequestPoint(new Point(51.531503, 46.004495), RequestPointType.WAYPOINT, ""));
-        requests.add(new RequestPoint(new Point(51.531903, 46.004995), RequestPointType.WAYPOINT, ""));
+        //requests.add(new RequestPoint(new Point(lat2, lon2), RequestPointType.WAYPOINT, ""));
+        //requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
+        //requests.add(new RequestPoint(new Point(51.531503, 46.004495), RequestPointType.WAYPOINT, ""));
+        //requests.add(new RequestPoint(new Point(51.531903, 46.004995), RequestPointType.WAYPOINT, ""));
 
         router.requestRoutes(requests, new TimeOptions(), new Session.RouteListener() {
             @Override
@@ -189,8 +201,8 @@ public class GoRoute extends Activity {
 
         //получение информации из предыдущего activity
         Intent intent = getIntent();
-        String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
-        String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
+        //String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
+        //String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
 
       /*
         //ГЕОКОДИРОВАНИЕ
@@ -262,7 +274,7 @@ public class GoRoute extends Activity {
         //PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
         //polylineRoute.setStrokeColor(Color.RED);
          //createMapObjects();
-         createMapObjects();
+         //createMapObjects();
 
     }
 

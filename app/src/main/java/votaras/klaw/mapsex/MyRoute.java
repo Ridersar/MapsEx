@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
-public class Route
+public class MyRoute
 {
     //создание точек
     static void createPoints(ArrayList<OpPoint> mas)
