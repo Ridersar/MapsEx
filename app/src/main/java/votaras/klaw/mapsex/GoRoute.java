@@ -130,19 +130,42 @@ public class GoRoute extends Activity {
         //mtRouter.requestRoutes(points, options, this);
         */
 
-
         ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         MyRoute.createPoints(mas); //создание объектов
+
+
+
+        //ближайшая точка (к A)
+        int start = 1;
+        double distA = 1000.0;
+        for (int i = 1; i < mas.size() - 1; i++)
+            if (Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) - (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1))  < distA) //точка, которая ближе Math.pow()
+            {
+                start = i + 1;
+                distA = Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) - (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1));
+            }
+
+
+        int finish = 9;
+        double distB = 1000.0;
+        for (int i = 1; i < mas.size() - 1; i++)
+            if (Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1))  < distB) //точка, которая ближе Math.pow()
+            {
+                finish = i + 1;
+                distB = Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1));
+            }
+
         //Route.drawRoute(mas); //отрисовка маршрутов
-        ArrayList<Point> route = MyRoute.searchRoute(mas, 1, 9); //маршрут
+        ArrayList<Point> route = MyRoute.searchRoute(mas, start, finish); //маршрут
 
         ArrayList<RequestPoint> requests = new ArrayList<>();
 
+        requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, "")); //A
         for (int i = 0; i < route.size(); i++)
         {
             requests.add(new RequestPoint(new Point(route.get(i).getLatitude(), route.get(i).getLongitude()), RequestPointType.WAYPOINT, ""));
         }
-
+        requests.add(new RequestPoint(new Point(lat2, lon2), RequestPointType.WAYPOINT, "")); //B
 
         //requests.add(new RequestPoint(new Point(lat1, lon1), RequestPointType.WAYPOINT, ""));
         //requests.add(new RequestPoint(new Point(lat2, lon2), RequestPointType.WAYPOINT, ""));
@@ -199,38 +222,65 @@ public class GoRoute extends Activity {
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
 
+
+
+
+
         //получение информации из предыдущего activity
         Intent intent = getIntent();
-        //String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
-        //String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
+        String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
+        String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
 
-      /*
+
         //ГЕОКОДИРОВАНИЕ
         ArrayList<RequestPoint> requests = new ArrayList<>();
         //Geocoder geocoder = new Geocoder(getApplicationContext());
         Geocoder geocoder = new Geocoder(this); //Locale.US
-        List<Address> addresses = new ArrayList<Address>(); //ArrayList
+        List<Address> addressesA = new ArrayList<Address>(); //ArrayList A
+        List<Address> addressesB = new ArrayList<Address>(); //ArrayList B
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
 
         //A = "Саратов, Слонова, 10/16";
+        double latA= 46.000000, latB= 46.000000, lonA= 46.000000, lonB = 46.000000; //изменить на ошибку! (если не корректное считывание)
+
+        latA=51.529515;
+        lonA=46.001392;
+        latB=51.629515;
+        lonB=46.101392;
         try {
             //List<Address> list = geocoder.getFromLocationName(A, 1);
             //Address add = list.get(0);
-            addresses = geocoder.getFromLocationName(A, 1); //получение координат по названию
+            addressesA = geocoder.getFromLocationName(A, 1); //получение координат по названию (A)
+            addressesB = geocoder.getFromLocationName(B, 1); //получение координат по названию (B)
             //Address a = geocoder.getFromLocationName(A, 1).get(0);
             //addresses.add(a);
-            int lengt = addresses.size(); //длина массива
+            int lengt = addressesA.size(); //длина массива
             String Slengt = Integer.toString(lengt); //длина массива (строка)
             Log.i("Length - ", Slengt); //вывод информации
             //addresses=geocoder.getFromLocationName(B,1);
-            if(addresses != null) //addresses.size() > 0
-            {
-                double lat=51.529515;
-                double lon=46.001392;
-                lat= addresses.get(0).getLatitude();
-                lon= addresses.get(0).getLongitude();
-                mapView.getMap().getMapObjects().addPlacemark(new Point(lat, lon));
 
+            if(addressesA != null) //addresses.size() > 0
+            {
+                latA=51.529515;
+                lonA=46.001392;
+                //latA= addressesA.get(0).getLatitude();
+                //lonA= addressesA.get(0).getLongitude();
+                mapView.getMap().getMapObjects().addPlacemark(new Point(latA, lonA));
+
+                //double latitude1= addresses.get(1).getLatitude();
+                //double longitude1= addresses.get(1).getLongitude();
+                //polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
+                //polylinePoints.add(new Point(latitude1,longitude1)); //добавление точки в список
+                //p1=new Point(latitude, longitude);
+                //p2=new Point(latitude1, longitude1);
+            }
+            if(addressesB != null) //addresses.size() > 0
+            {
+                latB=51.629515;
+                lonB=46.101392;
+                //latB= addressesA.get(0).getLatitude();
+                //lonB= addressesA.get(0).getLongitude();
+                mapView.getMap().getMapObjects().addPlacemark(new Point(latB, lonB));
 
                 //double latitude1= addresses.get(1).getLatitude();
                 //double longitude1= addresses.get(1).getLongitude();
@@ -257,11 +307,12 @@ public class GoRoute extends Activity {
         //int b = Integer.parseInt(B); //конец
         //mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
 
-*/
+
         //ПОСТРОЕНИЕ МАРШРУТА
         try{
             //routeBetween(aa,bb,51.517547, 46.010487);
-            routeBetween(51.528515, 46.000392,51.517547, 46.010487);
+            //routeBetween(51.528515, 46.000392,51.517547, 46.010487);
+            routeBetween(latA, lonA, latB, lonB);
         }catch (NullPointerException e){
             System.out.println("GPS is off");
         }
