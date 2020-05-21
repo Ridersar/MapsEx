@@ -1,9 +1,13 @@
 package votaras.klaw.mapsex;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 
 import com.yandex.mapkit.Animation;
@@ -45,10 +49,9 @@ public class MainActivity extends Activity {
     private MapView mapView;
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
-    private Button btn_create;
-
-
-
+    private Button btn_create, btn_statistics;
+    private int kol = 0;
+    SQLiteDatabase myDB;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -71,6 +74,23 @@ public class MainActivity extends Activity {
         addListenerOnButton ();
         super.onCreate(savedInstanceState);
         mapView = (MapView)findViewById(R.id.mapview);
+
+        //создание / открытие базы данных
+        myDB =
+                openOrCreateDatabase("my.db", MODE_PRIVATE, null);
+
+        //создание базы данных
+        myDB.execSQL(
+                "CREATE TABLE IF NOT EXISTS user (numberOfRoutes INT, flag INT)"
+        );
+
+        /*
+        //заполнение БД
+        ContentValues row1 = new ContentValues();
+        row1.put("cur", 1);
+
+        myDB.insert("user", null, row1);
+        */
 
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
@@ -116,6 +136,86 @@ public class MainActivity extends Activity {
                 }
         );
 
+        btn_statistics = (Button)findViewById(R.id.btnStatistics);
+        btn_statistics.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        kol++;
+                        String Skol = Integer.toString(kol);
+                        Log.i("Zaxodi v statistiky", Skol);
+                        Intent intent = new Intent(".Statistics");
+                        startActivity(intent);
+
+
+                        //тестирование БД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+                        //заполнение БД
+
+
+                        //Есть ли в базе данных что-то?
+                        boolean fl = false;
+
+                        Cursor cursor = myDB.query("user", new String[] { "numberOfRoutes",
+                                        "flag"}, "flag" + " = "+1,
+                                null, null, null, null, null);
+                        if (cursor.getCount() > 0)
+                            fl = true;
+
+                        //Если база данных пуста - заполнение начальными значениями
+                        if (fl == false)
+                        {
+                            ContentValues inf1 = new ContentValues();
+                            inf1.put("numberOfRoutes", 1); //заполнение начальной информацией
+                            inf1.put("flag", 1); //сигнал о том, что ячейка создана
+                            myDB.insert("user", null, inf1);
+                        }
+
+
+                        //запрос
+                        Cursor myCursor =
+                                myDB.rawQuery("select numberOfRoutes, flag from user", null);
+
+                        //проход по БД
+                        int num = -111; //начальное значение, символизирует ошибку
+                        while(myCursor.moveToNext())
+                        {
+                            num = myCursor.getInt(0);
+                        }
+
+                        //вывод
+                        String Scur = Integer.toString(num);
+                        Log.i("Baza dannix", Scur);
+
+                        num++; //увеличение посещений ????????
+                        ContentValues rowUp = new ContentValues();
+                        rowUp.put("numberOfRoutes", num);
+                        String where = "flag" + "=" + 1;
+                        myDB.update("user", rowUp, where, null);
+                        //myDB.update("user", rowUp, null, null);
+
+                        myCursor =
+                                myDB.rawQuery("select numberOfRoutes from user", null);
+
+                        while(myCursor.moveToNext())
+                        {
+                            num = myCursor.getInt(0);
+                        }
+                        Scur = Integer.toString(num);
+                        Log.i("Baza dannix2", Scur);
+
+
+                        //myDB.isOpen()
+                        //закрытие
+                        myCursor.close();
+                        cursor.close();
+                    }
+                }
+        );
+    };
+
+
 
     };
 
@@ -123,4 +223,7 @@ public class MainActivity extends Activity {
 
 
 
+
 }//public class
+
+
