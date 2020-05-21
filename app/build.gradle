@@ -20,6 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src/main/res', 'src/geocode'
+            }
+        }
+    }
 
 }
 
@@ -49,4 +56,5 @@ dependencies {
     implementation 'com.yandex.android:places:3.5.0'
     implementation 'com.yandex.android:search:3.5.0'
     implementation 'com.yandex.android:transport:3.5.0'
+
 }
