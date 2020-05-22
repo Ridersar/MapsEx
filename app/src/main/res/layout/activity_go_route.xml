@@ -37,10 +37,14 @@
 
                 <Button
                     android:id="@+id/btnExit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110sp"
+                    android:layout_height="50sp"
                     android:layout_gravity="center_horizontal|bottom"
                     android:background="@drawable/fields"
+                    android:fontFamily="monospace"
+                    android:textColor="@android:color/black"
+                    android:padding="10sp"
+                    android:textSize="18sp"
                     android:onClick="onclick"
                     android:text="Выход">
 
