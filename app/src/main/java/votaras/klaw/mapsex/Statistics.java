@@ -25,7 +25,7 @@ public class Statistics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        addListenerOnButton ();
+        //addListenerOnButton ();
 
         //создание / открытие базы данных
         myDB =
@@ -53,11 +53,13 @@ public class Statistics extends AppCompatActivity {
         Statistics.setText(Snum);
     };
 
-    public void onButtonClick(View v)
+    public void onButtonClick(View view)
     {
+        Intent intent = new Intent(this, MainActivity.class);
         EditText Statistics = (EditText)findViewById(R.id.txtStatistics);
+        startActivity(intent);
     };
-
+/*
     public void addListenerOnButton () {
         btn_stat_back = (Button) findViewById(R.id.btnBack);
         btn_stat_back.setOnClickListener(
@@ -70,4 +72,5 @@ public class Statistics extends AppCompatActivity {
                 }
         );
     }
+    */
 }
