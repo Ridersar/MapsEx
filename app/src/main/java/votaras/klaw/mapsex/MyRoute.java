@@ -1,6 +1,7 @@
 package votaras.klaw.mapsex;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.geometry.Polyline;
@@ -22,7 +23,7 @@ public class MyRoute
         mas.add(new OpPoint(51.535070, 46.009447, 2, 6)); //3
         mas.add(new OpPoint(51.535983, 46.016313, 1, 5, 7)); //4
         mas.add(new OpPoint(51.536620, 46.013590, 2, 4, 6, 8)); //5
-        mas.add(new OpPoint(51.537257, 46.010808, 5, 5, 9)); //6
+        mas.add(new OpPoint(51.537257, 46.010808, 3, 5, 9)); //6
         mas.add(new OpPoint(51.537746, 46.017283, 4, 8)); //7
         mas.add(new OpPoint(51.538355, 46.014530, 5, 7, 9)); //8
         mas.add(new OpPoint(51.538936, 46.011852, 6, 8)); //9
@@ -103,7 +104,6 @@ public class MyRoute
     static ArrayList<Point> searchRoute(ArrayList<OpPoint> mas, int start, int finish) {
         //int start = 1; // стартовая вершина
         int INT_MAX = 1000; //поменять!
-
         ArrayList<Integer> distance = new ArrayList<Integer>(); //массив расстояний, заполнение бесконечностями весов всех вершин
         for (int i = 0; i < mas.size(); i++)
             distance.add(INT_MAX);
@@ -140,15 +140,22 @@ public class MyRoute
                 }
             }
         }
-
+        String p_ln = Integer.toString(parents.size()); //вывод start
+        Log.i("Dlina mas parent", p_ln);
         //В массиве distance оказываются длины кратчайших путей до всех вершин, а в массиве parents - предки всех вершин (кроме стартовой start)
 
         //восстановление пути до вершины finish
         ArrayList<Integer> path = new ArrayList<Integer>(); //путь
 
         //int finish = 6; //конечная вершина пути
+        //start = 3;
+        //finish = 4;
         for (int vertex = finish; vertex != start; vertex = parents.get(vertex)) //проход по вершинам пути
+        {
             path.add(vertex); //сохранение вершины пути
+            String start_str = Integer.toString(vertex); //вывод start
+            Log.i("Path", start_str);
+        }
         path.add(start); //последний пункт (стартовый)
         Collections.reverse(path); //переворот пути, т.к. шли с конца
 
@@ -158,6 +165,9 @@ public class MyRoute
         ArrayList<Point> route = new ArrayList<>();
         for(int i = 0; i < path.size(); i++)
         {
+            int p = mas.get(path.get(i)).id; //
+            String p_str = Integer.toString(p); //вывод вершины
+            Log.i("Point", p_str); //
             route.add(new Point(mas.get(path.get(i)).x, mas.get(path.get(i)).y)); //добавление точки в список
         }
         return route;

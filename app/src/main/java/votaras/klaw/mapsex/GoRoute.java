@@ -139,21 +139,26 @@ public class GoRoute extends Activity {
         int start = 1;
         double distA = 1000.0;
         for (int i = 1; i < mas.size() - 1; i++)
-            if (Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) - (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1))  < distA) //точка, которая ближе Math.pow()
+            if (Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1))  < distA) //точка, которая ближе Math.pow()
             {
                 start = i + 1;
-                distA = Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) - (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1));
+                distA = Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1));
             }
 
 
-        int finish = 9;
+        int finish = 1;
         double distB = 1000.0;
         for (int i = 1; i < mas.size() - 1; i++)
-            if (Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1))  < distB) //точка, которая ближе Math.pow()
+            if (Math.sqrt((mas.get(i + 1).x - lat2)*(mas.get(i + 1).x - lat2) + (mas.get(i + 1).y - lon2)*(mas.get(i + 1).y - lon2))  < distB) //точка, которая ближе Math.pow()
             {
                 finish = i + 1;
-                distB = Math.sqrt((mas.get(i + 1).x - lat1)*(mas.get(i + 1).x - lat1) + (mas.get(i + 1).y - lon1)*(mas.get(i + 1).y - lon1));
+                distB = Math.sqrt((mas.get(i + 1).x - lat2)*(mas.get(i + 1).x - lat2) + (mas.get(i + 1).y - lon2)*(mas.get(i + 1).y - lon2));
             }
+
+        String start_str = Integer.toString(start); //вывод start
+        String finish_str = Integer.toString(finish); //вывод finish
+        Log.i("Start", start_str);
+        Log.i("Finish", finish_str);
 
         //Route.drawRoute(mas); //отрисовка маршрутов
         ArrayList<Point> route = MyRoute.searchRoute(mas, start, finish); //маршрут
@@ -263,8 +268,8 @@ public class GoRoute extends Activity {
             {
                 latA=51.529515;
                 lonA=46.001392;
-                //latA= addressesA.get(0).getLatitude();
-                //lonA= addressesA.get(0).getLongitude();
+                latA= addressesA.get(0).getLatitude();
+                lonA= addressesA.get(0).getLongitude();
                 mapView.getMap().getMapObjects().addPlacemark(new Point(latA, lonA));
 
                 //double latitude1= addresses.get(1).getLatitude();
@@ -278,8 +283,8 @@ public class GoRoute extends Activity {
             {
                 latB=51.629515;
                 lonB=46.101392;
-                //latB= addressesA.get(0).getLatitude();
-                //lonB= addressesA.get(0).getLongitude();
+                latB= addressesB.get(0).getLatitude();
+                lonB= addressesB.get(0).getLongitude();
                 mapView.getMap().getMapObjects().addPlacemark(new Point(latB, lonB));
 
                 //double latitude1= addresses.get(1).getLatitude();
@@ -289,6 +294,8 @@ public class GoRoute extends Activity {
                 //p1=new Point(latitude, longitude);
                 //p2=new Point(latitude1, longitude1);
             }
+
+
 
         }
         catch (IOException e) //IOException e

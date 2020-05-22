@@ -28,6 +28,7 @@ class OpPoint
     {
         this.x = x;
         this.y = y;
+        //добавить везде id
         transitions.put(id1, 0);
     }
 
