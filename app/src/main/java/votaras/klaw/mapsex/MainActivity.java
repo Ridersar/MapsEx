@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
     private MapView mapView;
     private MapObjectCollection mapObjects;
     private Handler animationHandler;
-    private Button btn_create, btn_statistics;
+    private Button btn_create, btn_statistics, btn_location;
     private int kol = 0;
     SQLiteDatabase myDB;
     @Override
@@ -135,6 +135,17 @@ public class MainActivity extends Activity {
                     }
                 }
         );
+
+        btn_location = (Button)findViewById(R.id.btnLocation);
+        btn_location.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
+
 
         btn_statistics = (Button)findViewById(R.id.btnStatistics);
         btn_statistics.setOnClickListener(

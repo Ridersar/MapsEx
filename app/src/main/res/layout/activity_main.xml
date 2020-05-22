@@ -40,17 +40,6 @@
             android:text="Создать маршрут"
             android:textColor="@android:color/black" />
 
-        <ImageButton
-            android:id="@+id/btnFindLocale"
-            android:layout_width="wrap_content"
-            android:layout_height="107dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="256dp"
-            android:layout_marginTop="491dp"
-            android:background="@null"
-            android:src="@drawable/loc210220" />
-
         <Button
             android:id="@+id/btnStatistics"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -59,15 +48,28 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="95dp"
+            android:layout_marginStart="100dp"
             android:layout_marginEnd="95dp"
             android:layout_marginBottom="30dp"
-            android:padding="10sp"
-            android:textSize="14sp"
             android:background="@drawable/fields"
+            android:padding="10sp"
             android:text="Статистика"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/btnLocation"
+            android:layout_width="67dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnStatistics"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top|right"
+            android:layout_marginStart="312dp"
+            android:layout_marginTop="551dp"
+            android:layout_marginEnd="400dp"
+            android:layout_marginBottom="-4dp"
+            android:background="@drawable/location2" />
 
 
     </com.yandex.mapkit.mapview.MapView>
