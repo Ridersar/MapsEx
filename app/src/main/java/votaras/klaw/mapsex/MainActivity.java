@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Log.i("Test", "Ok");
                     }
                 }
         );
