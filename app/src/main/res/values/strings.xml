@@ -11,6 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
+
     <string name="exit">Выход</string>
     <string name="save_data">Вы действительно хотите выйти?</string>
     <string name="yes">Да</string>
@@ -18,5 +19,10 @@
     <string name="saved">Сохранено</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="title_activity_completion">Completion</string>
+
+
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Location settings</string>
 
 </resources>

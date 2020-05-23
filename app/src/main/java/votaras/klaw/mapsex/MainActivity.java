@@ -1,10 +1,18 @@
 package votaras.klaw.mapsex;
 
+import android.Manifest;
 import android.app.Activity;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import android.content.pm.PackageManager;
+
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,14 +28,13 @@ import com.yandex.mapkit.map.PolylineMapObject;
 import com.yandex.mapkit.mapview.MapView;
 
 
-
-
-
 import android.content.Intent; //подключаем класс Intent
 import android.os.Bundle;
 import android.view.View; // подключаем класс View для обработки нажатия кнопки
 import android.widget.Button;
 import android.widget.EditText; // подключаем класс EditText
+
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,8 +60,7 @@ public class MainActivity extends Activity {
     private int kol = 0;
     SQLiteDatabase myDB;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         /**
          * Задайте API-ключ перед инициализацией MapKitFactory.
          * Рекомендуется устанавливать ключ в методе Application.onCreate,
@@ -67,13 +73,14 @@ public class MainActivity extends Activity {
          * Рекомендуется инициализировать библиотеку MapKit в методе Activity.onCreate
          * Инициализация в методе Application.onCreate может привести к лишним вызовам и увеличенному использованию батареи.
          */
+
         MapKitFactory.initialize(this);
         // Создание MapView.
 
         setContentView(R.layout.activity_main);
-        addListenerOnButton ();
+        addListenerOnButton();
         super.onCreate(savedInstanceState);
-        mapView = (MapView)findViewById(R.id.mapview);
+        mapView = (MapView) findViewById(R.id.mapview);
 
         //создание / открытие базы данных
         myDB =
@@ -100,9 +107,9 @@ public class MainActivity extends Activity {
 
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         //animationHandler = new Handler();
-
-       // createMapObjects();
+        // createMapObjects();
         //createMapObjects(); //отрисовка объектов
+
 
     }
 
@@ -130,11 +137,13 @@ public class MainActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(".ActivityDisplayMessage");
-                        startActivity(intent);
+
+                       Intent intent = new Intent(".ActivityDisplayMessage");
+                       startActivity(intent);
                     }
                 }
         );
+
 
         btn_location = (Button)findViewById(R.id.btnLocation);
         btn_location.setOnClickListener(
@@ -226,6 +235,43 @@ public class MainActivity extends Activity {
                 }
         );
     };
+
+
+    };
+
+
+
+    //создание объектов на карте
+    private void createMapObjects()
+    {
+        /*
+        ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
+        polylinePoints.add(new Point(point1.getLatitude(), point1.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point2.getLatitude(), point2.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point3.getLatitude(), point3.getLongitude())); //добавление точки в список
+        polylinePoints.add(new Point(point4.getLatitude(), point4.getLongitude())); //добавление точки в список
+        ArrayList<Point> polylinePointsAlena = new ArrayList<>(); //создание списка точек
+        polylinePointsAlena.add(new Point(pointBlue1.getLatitude(), pointBlue1.getLongitude())); //добавление точки в список
+        polylinePointsAlena.add(new Point(pointBlue2.getLatitude(), pointBlue2.getLongitude())); //добавление точки в список
+
+        PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
+        polyline.setStrokeColor(Color.RED);
+        PolylineMapObject polylineAlena = mapObjects.addPolyline(new Polyline(polylinePointsAlena)); //отрисовка маршрута по точкам списка
+        polylineAlena.setStrokeColor(Color.BLUE);
+        //polyline.setZIndex(100.0f);
+
+        ArrayList<Point> polylinePointsMagenta = new ArrayList<>();
+        polylinePointsMagenta.add(new Point(MagentaRoute1.getLatitude(), MagentaRoute1.getLongitude())); //добавление точки в список
+        polylinePointsMagenta.add(new Point(MagentaRoute2.getLatitude(), MagentaRoute2.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineMagenta = mapObjects.addPolyline(new Polyline(polylinePointsMagenta)); //отрисовка маршрута по точкам списка
+        polylineMagenta.setStrokeColor(Color.MAGENTA);
+
+        ArrayList<Point> polylinePointsGreen = new ArrayList<>();
+        polylinePointsGreen.add(new Point(GreenRoute1.getLatitude(), GreenRoute1.getLongitude())); //добавление точки в список
+        polylinePointsGreen.add(new Point(GreenRoute2.getLatitude(), GreenRoute2.getLongitude())); //добавление точки в список
+        PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
+        polylineGreen.setStrokeColor(Color.GREEN);
+        */
 
 
 

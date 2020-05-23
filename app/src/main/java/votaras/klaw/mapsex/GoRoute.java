@@ -1,13 +1,22 @@
 package votaras.klaw.mapsex;
 
+import android.Manifest;
 import android.app.Activity;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import android.content.pm.PackageManager;
+
 import android.graphics.Color;
 import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -56,6 +65,7 @@ import android.widget.EditText; // подключаем класс EditText
 import android.location.Geocoder;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 public class GoRoute extends Activity {
     /**
@@ -68,11 +78,11 @@ public class GoRoute extends Activity {
     private final Point point2 = new Point(51.527569, 46.011533);
     private final Point point3 = new Point(51.525753, 46.010434);
     private final Point point4 = new Point(51.520771, 46.002646);
-   private Point p1,p2;
+    private Point p1, p2;
 
 
-    private final Point MagentaRoute1 = new Point(51.528021,46.021923);
-    private final Point MagentaRoute2 = new Point(51.522136,46.018522);
+    private final Point MagentaRoute1 = new Point(51.528021, 46.021923);
+    private final Point MagentaRoute2 = new Point(51.522136, 46.018522);
     private final Point GreenRoute1 = new Point(51.525276, 45.994920);
     private final Point GreenRoute2 = new Point(51.528515, 46.000392);
     private final Point pointBlue1 = new Point(51.541023, 46.012058);
@@ -84,12 +94,17 @@ public class GoRoute extends Activity {
     private Handler animationHandler;
     private Button btn_create;
 
+
     private final Point ROUTE_START_LOCATION = new Point(51.528021, 46.021923);
     private final Point ROUTE_END_LOCATION = new Point(51.522136, 46.018522);
 
 
     private PedestrianRouter router;
     private MasstransitRouter mtRouter;
+
+    GPS m_gps;
+
+
     //попытка геокода
   /*  public Point getLocationFromAddress(String strAddress) throws IOException {
 
@@ -115,6 +130,7 @@ public class GoRoute extends Activity {
         }
         return p1;
     }*/
+
     public void routeBetween(double lat1, double lon1, double lat2, double lon2){
         Transport transport = TransportFactory.getInstance();
         router = transport.createPedestrianRouter();
@@ -196,7 +212,7 @@ public class GoRoute extends Activity {
                 System.out.println("Oshibka");
             }
         });
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,12 +228,15 @@ public class GoRoute extends Activity {
          * Рекомендуется инициализировать библиотеку MapKit в методе Activity.onCreate
          * Инициализация в методе Application.onCreate может привести к лишним вызовам и увеличенному использованию батареи.
          */
+        m_gps=new GPS(this);
         MapKitFactory.initialize(this);
         // Создание MapView.
         setContentView(R.layout.activity_go_route);
         super.onCreate(savedInstanceState);
+
         mapView = (MapView)findViewById(R.id.mapview);
         TransportFactory.initialize(this);
+
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
                 new CameraPosition(TARGET_LOCATION, 16.0f, 0.0f, 0.0f),
@@ -235,6 +254,7 @@ public class GoRoute extends Activity {
         Intent intent = getIntent();
         String A = intent.getStringExtra(ActivityDisplayMessage.A_str);
         String B = intent.getStringExtra(ActivityDisplayMessage.B_str);
+
 
 
         //ГЕОКОДИРОВАНИЕ
@@ -290,6 +310,34 @@ public class GoRoute extends Activity {
                 //double latitude1= addresses.get(1).getLatitude();
                 //double longitude1= addresses.get(1).getLongitude();
                 //polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
+
+
+
+        Location location=m_gps.getLocation();
+        Point my_gps=new Point(location.getLatitude(),location.getLongitude());
+        mapView.getMap().getMapObjects().addPlacemark(my_gps);
+//        MyLocationListener.SetUpLocationListener(this);
+        ArrayList<RequestPoint> requests = new ArrayList<>();
+        //      mapView.getMap().getMapObjects().addPlacemark(new Point(MyLocationListener.imHere.getLatitude(),MyLocationListener.imHere.getLongitude()));
+
+        // Geocoder geocoder = new Geocoder(getApplicationContext());
+        //List<Address> addresses;
+        //ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
+
+
+
+
+//попытка геокодирования
+        /*try {
+            addresses = geocoder.getFromLocationName(A, 1);
+            addresses=geocoder.getFromLocationName(B,1);
+            if(addresses.size() > 0) {
+                double latitude= addresses.get(0).getLatitude();
+                double longitude= addresses.get(0).getLongitude();
+                double latitude1= addresses.get(1).getLatitude();
+                double longitude1= addresses.get(1).getLongitude();
+               // polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
+
                 //polylinePoints.add(new Point(latitude1,longitude1)); //добавление точки в список
                 //p1=new Point(latitude, longitude);
                 //p2=new Point(latitude1, longitude1);
@@ -310,6 +358,7 @@ public class GoRoute extends Activity {
         //double aa=Double.parseDouble(A);
         //double bb=Double.parseDouble(B);
 
+
         //int a = Integer.parseInt(A); //начало
         //int b = Integer.parseInt(B); //конец
         //mapView.getMap().getMapObjects().addPlacemark(new Point(aa, bb));
@@ -323,18 +372,22 @@ public class GoRoute extends Activity {
         }catch (NullPointerException e){
             System.out.println("GPS is off");
         }
+
+
         //ArrayList<OpPoint> mas = new ArrayList<OpPoint>(); //список опорных точек
         //Route.createPoints(mas); //создание объектов
         //Route.drawRoute(mas); //отрисовка маршрутов
 
-       // ArrayList<Point> route = Route.searchRoute(mas, a, b); //маршрут
+        // ArrayList<Point> route = Route.searchRoute(mas, a, b); //маршрут
 
         //PolylineMapObject polylineRoute = mapObjects.addPolyline(new Polyline(route)); //отрисовка маршрута по точкам списка
         //polylineRoute.setStrokeColor(Color.RED);
-         //createMapObjects();
+
          //createMapObjects();
 
     }
+
+
 
     @Override
     protected void onStop() {
@@ -351,6 +404,7 @@ public class GoRoute extends Activity {
         MapKitFactory.getInstance().onStart();
         mapView.onStart();
     }
+
 
     //создание объектов на карте
     private void createMapObjects() {
