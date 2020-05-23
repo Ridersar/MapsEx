@@ -131,7 +131,8 @@ public class GoRoute extends Activity {
         return p1;
     }*/
 
-    public void routeBetween(double lat1, double lon1, double lat2, double lon2){
+    public void routeBetween(double lat1, double lon1, double lat2, double lon2)
+    {
         Transport transport = TransportFactory.getInstance();
         router = transport.createPedestrianRouter();
         /*
@@ -212,10 +213,11 @@ public class GoRoute extends Activity {
                 System.out.println("Oshibka");
             }
         });
-    }*/
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         /**
          * Задайте API-ключ перед инициализацией MapKitFactory.
          * Рекомендуется устанавливать ключ в методе Application.onCreate,
@@ -239,7 +241,7 @@ public class GoRoute extends Activity {
 
         // Перемещение камеры в центр Санкт-Петербурга.
         mapView.getMap().move(
-                new CameraPosition(TARGET_LOCATION, 16.0f, 0.0f, 0.0f),
+                new CameraPosition(TARGET_LOCATION, 15.5f, 0.0f, 0.0f),
                 new Animation(Animation.Type.LINEAR, 0),
                 null);
 
@@ -284,12 +286,12 @@ public class GoRoute extends Activity {
             Log.i("Length - ", Slengt); //вывод информации
             //addresses=geocoder.getFromLocationName(B,1);
 
-            if(addressesA != null) //addresses.size() > 0
+            if (addressesA != null) //addresses.size() > 0
             {
-                latA=51.529515;
-                lonA=46.001392;
-                latA= addressesA.get(0).getLatitude();
-                lonA= addressesA.get(0).getLongitude();
+                latA = 51.529515;
+                lonA = 46.001392;
+                latA = addressesA.get(0).getLatitude();
+                lonA = addressesA.get(0).getLongitude();
                 mapView.getMap().getMapObjects().addPlacemark(new Point(latA, lonA));
 
                 //double latitude1= addresses.get(1).getLatitude();
@@ -299,25 +301,45 @@ public class GoRoute extends Activity {
                 //p1=new Point(latitude, longitude);
                 //p2=new Point(latitude1, longitude1);
             }
-            if(addressesB != null) //addresses.size() > 0
+            if (addressesB != null) //addresses.size() > 0
             {
-                latB=51.629515;
-                lonB=46.101392;
-                latB= addressesB.get(0).getLatitude();
-                lonB= addressesB.get(0).getLongitude();
+                latB = 51.629515;
+                lonB = 46.101392;
+                latB = addressesB.get(0).getLatitude();
+                lonB = addressesB.get(0).getLongitude();
                 mapView.getMap().getMapObjects().addPlacemark(new Point(latB, lonB));
 
                 //double latitude1= addresses.get(1).getLatitude();
                 //double longitude1= addresses.get(1).getLongitude();
                 //polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
+            }
+        }
+        catch (IOException e) //IOException e
+        {
+            // Toast.makeText(GoRoute.this,"Sorry, can you select again?", Toast.LENGTH_SHORT);
+            e.printStackTrace();
+        }
 
 
 
-        Location location=m_gps.getLocation();
-        Point my_gps=new Point(location.getLatitude(),location.getLongitude());
-        mapView.getMap().getMapObjects().addPlacemark(my_gps);
+
+
+
+
+        //МЕСТОПОЛОЖЕНИЕ
+
+        //Location location=m_gps.getLocation();
+        //Point my_gps=new Point(location.getLatitude(),location.getLongitude());
+        //mapView.getMap().getMapObjects().addPlacemark(my_gps);
+
+
+
+
+
+
+
+
 //        MyLocationListener.SetUpLocationListener(this);
-        ArrayList<RequestPoint> requests = new ArrayList<>();
         //      mapView.getMap().getMapObjects().addPlacemark(new Point(MyLocationListener.imHere.getLatitude(),MyLocationListener.imHere.getLongitude()));
 
         // Geocoder geocoder = new Geocoder(getApplicationContext());
@@ -327,30 +349,6 @@ public class GoRoute extends Activity {
 
 
 
-//попытка геокодирования
-        /*try {
-            addresses = geocoder.getFromLocationName(A, 1);
-            addresses=geocoder.getFromLocationName(B,1);
-            if(addresses.size() > 0) {
-                double latitude= addresses.get(0).getLatitude();
-                double longitude= addresses.get(0).getLongitude();
-                double latitude1= addresses.get(1).getLatitude();
-                double longitude1= addresses.get(1).getLongitude();
-               // polylinePoints.add(new Point(latitude, longitude)); //добавление точки в список
-
-                //polylinePoints.add(new Point(latitude1,longitude1)); //добавление точки в список
-                //p1=new Point(latitude, longitude);
-                //p2=new Point(latitude1, longitude1);
-            }
-
-
-
-        }
-        catch (IOException e) //IOException e
-        {
-           // Toast.makeText(GoRoute.this,"Sorry, can you select again?", Toast.LENGTH_SHORT);
-            e.printStackTrace();
-        }
         //PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(polylinePoints)); //отрисовка маршрута по точкам списка
         //polyline.setStrokeColor(Color.RED);
 

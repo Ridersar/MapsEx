@@ -17,8 +17,8 @@ public class GPS {
     Context m_context;
     Location m_location;
     LocationManager m_locationManager;
-    //String m_provider=LocationManager.GPS_PROVIDER;
-    String m_provider = LocationManager.NETWORK_PROVIDER;
+    String m_provider=LocationManager.GPS_PROVIDER;
+    //String m_provider = LocationManager.NETWORK_PROVIDER;
 
     GPS(Context context) {
         m_context = context;

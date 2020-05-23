@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
     private Button btn_create, btn_statistics, btn_location;
     private int kol = 0;
     SQLiteDatabase myDB;
+    GPS m_gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**
@@ -81,7 +82,7 @@ public class MainActivity extends Activity {
         addListenerOnButton();
         super.onCreate(savedInstanceState);
         mapView = (MapView) findViewById(R.id.mapview);
-
+        m_gps=new GPS(this); //местополежние
         //создание / открытие базы данных
         myDB =
                 openOrCreateDatabase("my.db", MODE_PRIVATE, null);
@@ -151,6 +152,23 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Log.i("Test", "Ok");
+
+
+                        //МЕСТОПОЛОЖЕНИЕ
+                        Location location=m_gps.getLocation();
+                        Point my_gps=new Point(location.getLatitude(),location.getLongitude());
+                        //Point my_gps= new Point(51.520771, 46.002646);
+                        //mapView.getMap().getMapObjects().addPlacemark(my_gps);
+
+
+                        // Перемещение камеры в текущее местоположение
+                        mapView.getMap().move(
+                                new CameraPosition(my_gps, 15.5f, 0.0f, 0.0f),
+                                new Animation(Animation.Type.LINEAR, 0),
+                                null);
+
+
+
                     }
                 }
         );
@@ -234,16 +252,14 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-    };
+    }
 
 
-    };
 
 
 
     //создание объектов на карте
-    private void createMapObjects()
-    {
+    private void createMapObjects() {
         /*
         ArrayList<Point> polylinePoints = new ArrayList<>(); //создание списка точек
         polylinePoints.add(new Point(point1.getLatitude(), point1.getLongitude())); //добавление точки в список
@@ -272,10 +288,10 @@ public class MainActivity extends Activity {
         PolylineMapObject polylineGreen = mapObjects.addPolyline(new Polyline(polylinePointsGreen)); //отрисовка маршрута по точкам списка
         polylineGreen.setStrokeColor(Color.GREEN);
         */
+    }
 
 
-
-    };
+};
 
 
 
