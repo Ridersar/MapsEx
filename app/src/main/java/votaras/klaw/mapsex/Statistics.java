@@ -18,14 +18,13 @@ import android.widget.TextView;
 public class Statistics extends AppCompatActivity {
 
     private EditText Statistics;
-    private Button btn_statistics;
+    private Button btn_statistics, btn_stat_back;;
     SQLiteDatabase myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-
 
         //создание / открытие базы данных
         myDB =
@@ -53,8 +52,9 @@ public class Statistics extends AppCompatActivity {
         Statistics.setText(Snum);
     };
 
-    public void onButtonClick(View v)
-    {
+    public void onButtonClick(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         EditText Statistics = (EditText)findViewById(R.id.txtStatistics);
+        startActivity(intent);
     };
 }
